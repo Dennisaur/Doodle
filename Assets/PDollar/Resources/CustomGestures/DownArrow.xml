@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name = "DownArrow">
+<Gesture Name = "Down Arrow">
 	<Stroke>
 		<Point X = "60" Y = "-289" T = "0" Pressure = "0" />
 		<Point X = "60" Y = "-289" T = "0" Pressure = "0" />

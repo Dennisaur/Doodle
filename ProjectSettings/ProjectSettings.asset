@@ -6,11 +6,11 @@ PlayerSettings:
   serializedVersion: 12
   productGUID: 31a7ae74fdef49b489f2f39f0ad16654
   AndroidProfiler: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Dennisaur Co
   productName: Doodle
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
