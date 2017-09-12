@@ -7,15 +7,19 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 
 	public int score;
+	public Text scoreText;
 
-	public GameObject enemy;
-	public GameObject bullet;
 
-	public Text txtScore;
-	public Text txtGameOverScore;
+	public GameObject animal;
+	public GameObject hand;
 
 	public GameObject modalPause;
 	public GameObject modalGameOver;
+	public Text gameOverText;
+	public Text gameOverScore;
+	public Text gameOverHighScore;
+
+	private int highScore;
 
 	// Called before Start functions
 	void Awake () {
@@ -33,12 +37,13 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		highScore = PlayerPrefs.GetInt ("HighScore", 0);
 		PlayAgain ();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Escape) && !GetIsPaused()) {
 			Pause ();
 		}
 	}
@@ -49,7 +54,7 @@ public class GameManager : MonoBehaviour {
 
 	public void PlayAgain() {
 		score = 0;
-		txtScore.text = score.ToString ();
+		scoreText.text = score.ToString ();
 		ClearField ();
 
 		// Hide modals and resume time
@@ -59,8 +64,18 @@ public class GameManager : MonoBehaviour {
 	}
 		
 	public void GameOver() {
-		txtGameOverScore.text = score.ToString ();
+		// Pause the game
 		Time.timeScale = 0;
+
+		if (score > highScore) {
+			gameOverText.text = "New High Score!";
+			highScore = score;
+			PlayerPrefs.SetInt ("HighScore", highScore);
+		} else {
+			gameOverText.text = "Game Over";
+		}
+		gameOverScore.text = score.ToString ();
+		gameOverHighScore.text = highScore.ToString ();
 		modalGameOver.SetActive (true);
 	}
 
@@ -95,6 +110,6 @@ public class GameManager : MonoBehaviour {
 	/// <param name="points">Points.</param>
 	public void AddPoints(int points) {
 		score += points;
-		txtScore.text = score.ToString ();
+		scoreText.text = score.ToString ();
 	}
 }

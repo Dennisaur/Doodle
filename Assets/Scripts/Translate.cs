@@ -6,6 +6,8 @@ public class Translate : MonoBehaviour {
 	public Vector3 direction = Vector3.down;
 	public float speed = 5f;
 
+	private bool stopMovement = false;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,21 +15,19 @@ public class Translate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		gameObject.transform.Translate(direction * Time.deltaTime * speed);
+		if (!stopMovement) {
+			gameObject.transform.Translate (direction * Time.deltaTime * speed);
+		}
 
-		if (gameObject.transform.localPosition.y <= -11 || gameObject.transform.localPosition.y > 9) {
+		if (gameObject.transform.localPosition.y > 8) {
 			Destroy (gameObject);
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (gameObject.tag == "Enemy") {
-			if (other.gameObject.tag == "Bullet") {
-				Destroy (gameObject);
-				Destroy (other.gameObject);
-				GameManager.instance.AddPoints (1);
-			} else if (other.gameObject.tag == "Player") {
-				GameManager.instance.GameOver ();
+		if (gameObject.tag == "Bullet") {
+			if (other.gameObject.tag == "Enemy") {
+				stopMovement = true;
 			}
 		}
 	}

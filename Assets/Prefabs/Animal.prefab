@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4972943240549988}
   - component: {fileID: 212673768362950180}
-  - component: {fileID: 114086890497723114}
   - component: {fileID: 58035863693300206}
   - component: {fileID: 50284869926461144}
+  - component: {fileID: 114146838851157016}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Animal
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980803497570530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.79, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -75,10 +75,10 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.8}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &114086890497723114
+  m_Radius: 1.25
+--- !u!114 &114146838851157016
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,11 +86,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1980803497570530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3aba3f950d4b0548bfed4a48791ba71, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cff71ad46ea08e4388c9589a270ceec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 1, z: 0}
-  speed: 5
+  sprites:
+  - {fileID: 21300000, guid: 52c9092708e3eb84c923ba9ea61298a7, type: 3}
+  - {fileID: 21300000, guid: f9fc851583cc50d4d9edb657d7ced3d8, type: 3}
+  - {fileID: 21300000, guid: a3d9351c7316dec44bf761ff9f738094, type: 3}
+  - {fileID: 21300000, guid: 46b9899a3e7e0a14bb4f042d6afa5dae, type: 3}
+  - {fileID: 21300000, guid: 522339270b409394aab0923508f47d18, type: 3}
+  - {fileID: 21300000, guid: 722adc295010eb345b5ed107bdd838bb, type: 3}
+  - {fileID: 21300000, guid: 56810dcd0b6cd314aa5602aed0db29f9, type: 3}
+  - {fileID: 21300000, guid: a97e5b62599ab1345bb9e4605f055fec, type: 3}
+  - {fileID: 21300000, guid: c76dc33ea2d59864193d90619186196e, type: 3}
+  - {fileID: 21300000, guid: ed10270f5ea836a4c9d55b8314b12705, type: 3}
+  blinkSprite: {fileID: 21300000, guid: 47be90d01e8118142a8c378669a02bc7, type: 3}
+  blinkLength: 0.1
+  direction: {x: 0, y: -1, z: 0}
+  speed: 3
 --- !u!212 &212673768362950180
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,12 +136,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 55f0a7982ac08824b9bd1599f1ab813c, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c76dc33ea2d59864193d90619186196e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.84, y: 3.7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

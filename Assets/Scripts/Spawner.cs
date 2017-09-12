@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour {
 		// Spawn every spawnRate seconds
 		if (Time.time - secondsPerSpawn >= lastSpawn) {
 			// Spawn
-			Instantiate(spawnObject, spawnLocations[Random.Range(0, spawnLocations.Length)].transform.localPosition, Quaternion.identity, spawnObjectParent.transform);
+			Instantiate(spawnObject, spawnLocations[Random.Range(0, spawnLocations.Length)].transform.position, Quaternion.identity, spawnObjectParent.transform);
 
 			// Reset last spawn time
 			lastSpawn = Time.time;
