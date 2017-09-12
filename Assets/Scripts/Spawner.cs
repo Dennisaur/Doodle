@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 
-	public GameObject gameObject;
-	public float spawnRate;
+	public GameObject spawnObject;
+	public GameObject spawnObjectParent;
+	public float secondsPerSpawn;
+	public float secondsPerLevel;
+	public float spawnRateChange;
+
 	public GameObject[] spawnLocations;
 
 	private float lastSpawn;
+	private float lastLevel;
 
 	// Use this for initialization
 	void Start () {
 		
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
 		// Spawn every spawnRate seconds
-		if (Time.time - spawnRate >= lastSpawn) {
+		if (Time.time - secondsPerSpawn >= lastSpawn) {
 			// Spawn
-			Instantiate(gameObject, spawnLocations[Random.Range(0, spawnLocations.Length)].transform.localPosition, Quaternion.identity);
+			Instantiate(spawnObject, spawnLocations[Random.Range(0, spawnLocations.Length)].transform.localPosition, Quaternion.identity, spawnObjectParent.transform);
 
 			// Reset last spawn time
 			lastSpawn = Time.time;
+		}
+
+		// Use rate change to adjust spawn rate per level
+		if (Time.time - secondsPerLevel >= lastLevel) {
+			secondsPerSpawn *= spawnRateChange;
+
+			lastLevel = Time.time;
 		}
 	}
 }

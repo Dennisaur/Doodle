@@ -21,9 +21,14 @@ public class Translate : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (gameObject.name == "Triangle(Clone)") {
-			Destroy (gameObject);
-			Destroy (other.gameObject);
+		if (gameObject.tag == "Enemy") {
+			if (other.gameObject.tag == "Bullet") {
+				Destroy (gameObject);
+				Destroy (other.gameObject);
+				GameManager.instance.AddPoints (1);
+			} else if (other.gameObject.tag == "Player") {
+				GameManager.instance.GameOver ();
+			}
 		}
 	}
 
