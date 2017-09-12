@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour {
 	public int score;
 	public Text scoreText;
 
-
 	public GameObject animal;
+	public Spawner animalSpawner;
 	public GameObject hand;
 
 	public GameObject modalPause;
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour {
 		score = 0;
 		scoreText.text = score.ToString ();
 		ClearField ();
+		animalSpawner.ResetSpawnRate ();
 
 		// Hide modals and resume time
 		modalGameOver.SetActive (false);

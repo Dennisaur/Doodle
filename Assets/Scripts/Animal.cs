@@ -8,7 +8,9 @@ public class Animal : MonoBehaviour {
 	private bool blinkSpriteChanged;
 	public float blinkLength;
 	private float blinkTime = 0;
+	public Sprite pokeSprite;
 	private GameObject hand;
+	private float rotationTime;
 
 	public Vector3 direction = Vector3.down;
 	public float speed = 5f;
@@ -27,6 +29,8 @@ public class Animal : MonoBehaviour {
 			Destroy (gameObject);
 			Destroy (hand);
 			GameManager.instance.AddPoints (1);
+		} else {
+			hand.transform.rotation = Quaternion.Lerp (Quaternion.Euler (0, 0, 0), Quaternion.Euler (-20, 0, 0), (Time.time - blinkTime) * blinkLength);
 		}
 	}
 

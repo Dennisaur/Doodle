@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74264705, g: 0.97870183, b: 1, a: 1}
+  m_Color: {r: 0.3897059, g: 0.2901056, b: 0.02865485, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1542,6 +1542,7 @@ MonoBehaviour:
   score: 0
   scoreText: {fileID: 1169035739}
   animal: {fileID: 1980803497570530, guid: f37b0c42b9a5a184c928682d5b5762c5, type: 2}
+  animalSpawner: {fileID: 1081172309}
   hand: {fileID: 1476476940824932, guid: 8d069cb6d9a7a9246b01107d115d4836, type: 2}
   modalPause: {fileID: 250023357}
   modalGameOver: {fileID: 929316214}
@@ -1586,9 +1587,10 @@ MonoBehaviour:
   spawnObject: {fileID: 1980803497570530, guid: f37b0c42b9a5a184c928682d5b5762c5,
     type: 2}
   spawnObjectParent: {fileID: 2008827020}
-  secondsPerSpawn: 1
-  secondsPerLevel: 10
-  spawnRateChange: 0.9
+  startingSpawnRate: 1
+  spawnRate: 1
+  secondsPerLevel: 3
+  spawnRateChange: 1.1
   spawnLocations:
   - {fileID: 1040599520}
   - {fileID: 306615543}
@@ -1770,9 +1772,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gestureOnScreenPrefab: {fileID: 400000, guid: 971129baafd304455a111daa5207b8a1,
     type: 2}
-  player: {fileID: 1681488474}
-  bullet: {fileID: 1980803497570530, guid: f37b0c42b9a5a184c928682d5b5762c5, type: 2}
-  gestureThreshold: 0.6
+  hands: {fileID: 1681488474}
+  gestureThreshold: 0.4
   gestureSpawnObject: {fileID: 1476476940824932, guid: 8d069cb6d9a7a9246b01107d115d4836,
     type: 2}
   gesture: {fileID: 1380732595279694, guid: 1404e8d5dee420a4686812f5815b5aac, type: 2}
@@ -2602,7 +2603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1681488477}
   m_Layer: 0
-  m_Name: Bullets
+  m_Name: Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2706,17 +2707,17 @@ Prefab:
     - target: {fileID: 212156233775077358, guid: e344eabc0f3527b40aa65935bc5f96f9,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.9189656
+      value: 0.72794116
       objectReference: {fileID: 0}
     - target: {fileID: 212156233775077358, guid: e344eabc0f3527b40aa65935bc5f96f9,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.6544118
+      value: 0.38685715
       objectReference: {fileID: 0}
     - target: {fileID: 212156233775077358, guid: e344eabc0f3527b40aa65935bc5f96f9,
         type: 2}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.35326555
       objectReference: {fileID: 0}
     - target: {fileID: 212156233775077358, guid: e344eabc0f3527b40aa65935bc5f96f9,
         type: 2}

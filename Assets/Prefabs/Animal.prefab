@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980803497570530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.79, y: 0, z: 0}
+  m_LocalPosition: {x: 5.06, y: 0.6614106, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.8}
+  m_Offset: {x: 0, y: 0.75}
   serializedVersion: 2
   m_Radius: 1.25
 --- !u!114 &114146838851157016
@@ -102,6 +102,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ed10270f5ea836a4c9d55b8314b12705, type: 3}
   blinkSprite: {fileID: 21300000, guid: 47be90d01e8118142a8c378669a02bc7, type: 3}
   blinkLength: 0.1
+  pokeSprite: {fileID: 21300000, guid: d78473a8fb5d53a41948851c2409eb05, type: 3}
   direction: {x: 0, y: -1, z: 0}
   speed: 3
 --- !u!212 &212673768362950180
