@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
+	public GestureHandler gestureHandler;
 
 	public int score;
 	public Text scoreText;
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour {
 		scoreText.text = score.ToString ();
 		ClearField ();
 		animalSpawner.ResetSpawnRate ();
+		// gestureHandler.ResetGestures ();
 
 		// Hide modals and resume time
 		modalGameOver.SetActive (false);

@@ -19,7 +19,7 @@ public class Translate : MonoBehaviour {
 			gameObject.transform.Translate (direction * Time.deltaTime * speed);
 		}
 
-		if (gameObject.transform.localPosition.y > 8) {
+		if (gameObject.transform.position.y > 8) {
 			Destroy (gameObject);
 		}
 	}
