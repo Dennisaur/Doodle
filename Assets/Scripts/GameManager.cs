@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	public Text scoreText;
 
 	public GameObject animal;
-	public Spawner animalSpawner;
+	public AnimalManager animalManager;
 	public GameObject hand;
 
 	public GameObject modalPause;
@@ -49,23 +49,33 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Return true if paused
+	/// </summary>
+	/// <returns><c>true</c>, if game is currently paused, <c>false</c> otherwise.</returns>
 	public bool GetIsPaused() {
 		return Time.timeScale == 0;
 	}
 
+	/// <summary>
+	/// Restarts the game
+	/// </summary>
 	public void PlayAgain() {
 		score = 0;
 		scoreText.text = score.ToString ();
 		ClearField ();
-		animalSpawner.ResetSpawnRate ();
-		// gestureHandler.ResetGestures ();
+		animalManager.ResetSpawnRate ();
+		gestureHandler.ResetGestures ();
 
 		// Hide modals and resume time
 		modalGameOver.SetActive (false);
 		modalPause.SetActive (false);
 		Time.timeScale = 1;
 	}
-		
+
+	/// <summary>
+	/// Displays game over screen
+	/// </summary>
 	public void GameOver() {
 		// Pause the game
 		Time.timeScale = 0;
@@ -80,13 +90,21 @@ public class GameManager : MonoBehaviour {
 		gameOverScore.text = score.ToString ();
 		gameOverHighScore.text = highScore.ToString ();
 		modalGameOver.SetActive (true);
+
+		AdManager.instance.CompletePlay ();
 	}
 
+	/// <summary>
+	/// Pauses the game.
+	/// </summary>
 	public void Pause() {
 		Time.timeScale = 0;
 		modalPause.SetActive (true);
 	}
 
+	/// <summary>
+	/// Resumes the game.
+	/// </summary>
 	public void Resume() {
 		Time.timeScale = 1;
 		modalPause.SetActive (false);

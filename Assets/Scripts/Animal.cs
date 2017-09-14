@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Animal : MonoBehaviour {
-	public Sprite[] sprites;
-	public Sprite blinkSprite;
+
+	private Theme theme;
+
 	private bool blinkSpriteChanged;
 	public float blinkLength;
-	private float blinkTime = 0;
+	private float blinkTime;
+
 	public Sprite pokeSprite;
 	private GameObject hand;
 	private float rotationTime;
@@ -17,29 +19,45 @@ public class Animal : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// Set random animal sprite
-		//GetComponent<SpriteRenderer> ().sprite = sprites [Random.Range (0, sprites.Length)];
+		theme =  ThemeManager.instance.GetCurrentTheme();
+		GetComponent<SpriteRenderer> ().sprite = theme.animalSprite;
+		blinkTime = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// Normal movement
 		if (blinkTime == 0) {
 			gameObject.transform.Translate (direction * Time.deltaTime * speed);
-		} else if (Time.time > blinkTime + blinkLength) {
-			Destroy (gameObject);
-			Destroy (hand);
+		} 
+		// Destroy hand and animal objects after blink complete
+		else if (Time.time > blinkTime + blinkLength) {
 			GameManager.instance.AddPoints (1);
-		} else {
+			Destroy (hand);
+			Destroy (gameObject);
+		}
+		// Lerp hand transform during blink
+		else {
 			hand.transform.rotation = Quaternion.Lerp (Quaternion.Euler (0, 0, 0), Quaternion.Euler (-20, 0, 0), (Time.time - blinkTime) * blinkLength);
 		}
 	}
 
+	/// <summary>
+	/// Raises the trigger enter 2d event.
+	/// </summary>
+	/// <param name="other">Other collider</param>
 	void OnTriggerEnter2D(Collider2D other) {
+		// Collision with hand
 		if (other.gameObject.tag == "Bullet") {
+			// Set blink time and change to blinking sprite
 			blinkTime = Time.time;
+			GetComponent<SpriteRenderer> ().sprite = theme.animalBlinkSprite;
+
+			// Sets reference to destroy later (after blink complete)
 			hand = other.gameObject;
-			GetComponent<SpriteRenderer> ().sprite = blinkSprite;
-		} else if (other.gameObject.tag == "Player") {
+		}
+		// Collision with player
+		else if (other.gameObject.tag == "Player") {
 			GameManager.instance.GameOver ();
 		}
 	}

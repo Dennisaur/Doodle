@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GestureObject : MonoBehaviour {
-//	public Dictionary<string, Sprite> spriteList = new Dictionary<string, Sprite>();
 	public Sprite[] spriteList;
 	public string name;
 
@@ -14,12 +13,11 @@ public class GestureObject : MonoBehaviour {
 		image.sprite = GetRandomGesture ();
 		name = image.sprite.name;
 	}
-	
-	// Update is called once per frame
-//	void Update () {
-//		
-//	}
 
+	/// <summary>
+	/// Gets a random gesture sprite.
+	/// </summary>
+	/// <returns>A random gesture sprite.</returns>
 	private Sprite GetRandomGesture() {
 		return spriteList[Random.Range (0, spriteList.Length)];
 	}
