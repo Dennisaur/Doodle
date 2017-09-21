@@ -51,4 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4edebd0a07892a46a52d623e48e1b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playsPerAd: 5
+  playsPerAd: 10

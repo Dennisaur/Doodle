@@ -9,7 +9,6 @@ public class ThemeManager : MonoBehaviour {
 	public Theme[] defaultThemes;
 
 	private Theme[] themes;
-
 	private int highScore;
 
 	// Called before Start functions
@@ -19,7 +18,7 @@ public class ThemeManager : MonoBehaviour {
 			// If not, set instance to this
 			instance = this;
 
-			// PlayerPrefs.DeleteAll ();
+			PlayerPrefs.DeleteAll ();
 
 			// Initialize themes in awake because other objects depends on theme to be intialized
 			string temp = "";
@@ -44,7 +43,6 @@ public class ThemeManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-
 		themeIndex = PlayerPrefs.GetInt ("ThemeIndex", 0);
 		highScore = PlayerPrefs.GetInt ("HighScore", 0);
 	}
@@ -80,6 +78,15 @@ public class ThemeManager : MonoBehaviour {
 		theme.unlocked = true;
 		PlayerPrefs.SetString ("Theme-" + themeIndex, JsonUtility.ToJson (theme));
 	}
+
+	public void UpdateTheme() {
+		UnityEngine.UI.Text[] texts = Object.FindObjectsOfType<UnityEngine.UI.Text> ();
+		foreach (UnityEngine.UI.Text text in texts) {
+			if (text.gameObject.name != "txtPlay") {
+				text.color = GetCurrentTheme ().textColor;
+			}
+		}
+	}
 }
 
 // Used for setting up dictionary in editor
@@ -91,4 +98,5 @@ public class Theme {
 	public Sprite animalBlinkSprite;
 	public int unlockScore;
 	public bool unlocked;
+	public Color textColor;
 }

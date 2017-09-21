@@ -9,7 +9,13 @@ public class MenuManager : MonoBehaviour {
 	public Text txtHighScore;
 	public GameObject unlockScore;
 	public Text txtUnlockScore;
+
+	public Image soundButtonImage;
+	public GameObject soundOnSprite;
+	public GameObject soundOffSprite;
+
 	public BackgroundManager background;
+
 	public GameObject[] animals;
 
 	private Theme theme;
@@ -36,6 +42,14 @@ public class MenuManager : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// Toggles the sound.
+	/// </summary>
+	public void ToggleSound() {
+		BackgroundMusic.instance.ToggleSound ();
+		UpdateMenu ();
+	}
+
+	/// <summary>
 	/// Updates the menu screen
 	/// </summary>
 	public void UpdateMenu() {
@@ -57,6 +71,13 @@ public class MenuManager : MonoBehaviour {
 		txtHighScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
 		unlockScore.SetActive (!theme.unlocked);
 		txtUnlockScore.text = theme.unlockScore.ToString();
+
+		// Set sound off/on
+		bool soundIsOn = BackgroundMusic.instance.GetSoundIsOn ();
+		soundOnSprite.SetActive (soundIsOn);
+		soundOffSprite.SetActive (!soundIsOn);
+
+		ThemeManager.instance.UpdateTheme ();
 	}
 
 	/// <summary>
