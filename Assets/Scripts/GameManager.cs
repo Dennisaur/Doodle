@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 	public GestureHandler gestureHandler;
 
+	public GameMode gameMode;
+
 	public int score;
 	public Text scoreText;
+
+	public GameObject player;
 
 	public GameObject animal;
 	public AnimalManager animalManager;
@@ -39,6 +44,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		highScore = PlayerPrefs.GetInt ("HighScore", 0);
+		SetGameMode ();
 		PlayAgain ();
 	}
 
@@ -46,6 +52,20 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape) && !GetIsPaused()) {
 			Pause ();
+		}
+	}
+
+	private void SetGameMode() {
+		gameMode = (GameMode)PlayerPrefs.GetInt ("GameMode", 0);
+		switch (gameMode) {
+		case GameMode.Auto:
+			break;
+		case GameMode.Stick:
+			player.GetComponent<Joystick> ().enabled = true;
+			break;
+		case GameMode.Tilt:
+			player.GetComponent<AccelerometerInput> ().enabled = true;
+			break;
 		}
 	}
 
@@ -91,6 +111,8 @@ public class GameManager : MonoBehaviour {
 		gameOverHighScore.text = highScore.ToString ();
 		modalGameOver.SetActive (true);
 
+		PlayerPrefs.SetInt ("Boops", score + PlayerPrefs.GetInt ("Boops", 0));
+
 		AdManager.instance.CompletePlay ();
 	}
 
@@ -133,4 +155,10 @@ public class GameManager : MonoBehaviour {
 		score += points;
 		scoreText.text = score.ToString ();
 	}
+}
+
+public enum GameMode {
+	Auto,
+	Stick,
+	Tilt
 }

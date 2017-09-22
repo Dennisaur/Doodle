@@ -32,12 +32,11 @@ public class Animal : MonoBehaviour {
 		} 
 		// Destroy hand and animal objects after blink complete
 		else if (Time.time > blinkTime + blinkLength) {
-			GameManager.instance.AddPoints (1);
 			Destroy (hand);
 			Destroy (gameObject);
 		}
 		// Lerp hand transform during blink
-		else {
+		else if (hand) {
 			hand.transform.rotation = Quaternion.Lerp (Quaternion.Euler (0, 0, 0), Quaternion.Euler (-20, 0, 0), (Time.time - blinkTime) * blinkLength);
 		}
 	}
@@ -49,6 +48,9 @@ public class Animal : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		// Collision with hand
 		if (other.gameObject.tag == "Bullet") {
+			// Add to score
+			GameManager.instance.AddPoints (1);
+
 			// Set blink time and change to blinking sprite
 			blinkTime = Time.time;
 			GetComponent<SpriteRenderer> ().sprite = theme.animalBlinkSprite;

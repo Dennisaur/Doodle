@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour {
 	public GameObject unlockScore;
 	public Text txtUnlockScore;
 
+	public Text txtGameMode;
+
 	public Image soundButtonImage;
 	public GameObject soundOnSprite;
 	public GameObject soundOffSprite;
@@ -77,7 +79,23 @@ public class MenuManager : MonoBehaviour {
 		soundOnSprite.SetActive (soundIsOn);
 		soundOffSprite.SetActive (!soundIsOn);
 
-		ThemeManager.instance.UpdateTheme ();
+		// Update text colors
+		UpdateTheme ();
+
+		// Update game mode
+		txtGameMode.text = (ThemeManager.instance.GetGameMode() == GameMode.Tilt) ? "Tilt" : "Auto";
+	}
+
+	/// <summary>
+	/// Updates the text colors based on theme.
+	/// </summary>
+	public void UpdateTheme() {
+		UnityEngine.UI.Text[] texts = Object.FindObjectsOfType<UnityEngine.UI.Text> ();
+		foreach (UnityEngine.UI.Text text in texts) {
+			if (text.gameObject.name != "txtPlay" && text.gameObject.name != "txtGameMode") {
+				text.color = ThemeManager.instance.GetCurrentTheme ().textColor;
+			}
+		}
 	}
 
 	/// <summary>
@@ -86,6 +104,15 @@ public class MenuManager : MonoBehaviour {
 	public void UnlockTheme() {
 		// Unlock theme in player prefs
 		ThemeManager.instance.UnlockTheme();
+
+		UpdateMenu ();
+	}
+
+	/// <summary>
+	/// Toggles the game mode.
+	/// </summary>
+	public void ToggleGameMode() {
+		ThemeManager.instance.ToggleGameMode ();
 
 		UpdateMenu ();
 	}

@@ -7,9 +7,10 @@ public class ThemeManager : MonoBehaviour {
 
 	public int themeIndex;
 	public Theme[] defaultThemes;
-
 	private Theme[] themes;
 	private int highScore;
+
+	private GameMode gameMode;
 
 	// Called before Start functions
 	void Awake () {
@@ -45,6 +46,7 @@ public class ThemeManager : MonoBehaviour {
 	void Start() {
 		themeIndex = PlayerPrefs.GetInt ("ThemeIndex", 0);
 		highScore = PlayerPrefs.GetInt ("HighScore", 0);
+		gameMode = (GameMode)PlayerPrefs.GetInt ("GameMode", 0);
 	}
 
 	/// <summary>
@@ -52,6 +54,7 @@ public class ThemeManager : MonoBehaviour {
 	/// </summary>
 	public void PreviousTheme() {
 		themeIndex = (--themeIndex + themes.Length) % themes.Length;
+		PlayerPrefs.SetInt ("ThemeIndex", themeIndex);
 	}
 
 	/// <summary>
@@ -59,6 +62,7 @@ public class ThemeManager : MonoBehaviour {
 	/// </summary>
 	public void NextTheme() {
 		themeIndex = ++themeIndex % themes.Length;
+		PlayerPrefs.SetInt ("ThemeIndex", themeIndex);
 	}
 
 	/// <summary>
@@ -79,13 +83,18 @@ public class ThemeManager : MonoBehaviour {
 		PlayerPrefs.SetString ("Theme-" + themeIndex, JsonUtility.ToJson (theme));
 	}
 
-	public void UpdateTheme() {
-		UnityEngine.UI.Text[] texts = Object.FindObjectsOfType<UnityEngine.UI.Text> ();
-		foreach (UnityEngine.UI.Text text in texts) {
-			if (text.gameObject.name != "txtPlay") {
-				text.color = GetCurrentTheme ().textColor;
-			}
+	public void ToggleGameMode() {
+		if (gameMode == GameMode.Auto) {
+			gameMode = GameMode.Tilt;
+		} else {
+			gameMode = GameMode.Auto;
 		}
+
+		PlayerPrefs.SetInt ("GameMode", (int)gameMode);
+	}
+
+	public GameMode GetGameMode() {
+		return gameMode;
 	}
 }
 

@@ -13,6 +13,8 @@ public class AnimalManager : MonoBehaviour {
 	public float secondsPerLevel;
 	public GameObject[] spawnLocations;
 
+	private List<float> animalXPositions;
+
 	private float spawnRate;
 	private float lastSpawn;
 	private float lastLevel;
@@ -33,6 +35,7 @@ public class AnimalManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		animalXPositions = new List<float> ();
 		ResetSpawnRate ();
 	}
 
@@ -41,7 +44,9 @@ public class AnimalManager : MonoBehaviour {
 		// Spawn an animal object at the given spawnRate
 		if (Time.time - (1f / spawnRate) >= lastSpawn) {
 			// Spawn the animal object
-			Instantiate(animal, spawnLocations[Random.Range(0, spawnLocations.Length)].transform.position, Quaternion.identity, animalParent.transform);
+			Vector3 randomSpawnPosition = spawnLocations[Random.Range(0, spawnLocations.Length)].transform.position;
+			Instantiate(animal, randomSpawnPosition, Quaternion.identity, animalParent.transform);
+			animalXPositions.Add (randomSpawnPosition.x);
 
 			// Reset last spawn time
 			lastSpawn = Time.time;
@@ -64,5 +69,13 @@ public class AnimalManager : MonoBehaviour {
 		spawnRate = startingSpawnRate;
 		lastSpawn = Time.time;
 		lastLevel = Time.time;
+	}
+
+	public void AnimalsShift() {
+		animalXPositions.RemoveAt (0);
+	}
+
+	public float GetFirstAnimalX() {
+		return (animalXPositions.Count > 0) ? animalXPositions [0] : Mathf.Infinity;
 	}
 }

@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1674085091505926}
+  m_IsPrefabParent: 1
+--- !u!1 &1674085091505926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4830609880516626}
+  - component: {fileID: 114344769676275912}
+  m_Layer: 0
+  m_Name: ThemeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4830609880516626
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674085091505926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114344769676275912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674085091505926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e1ed8717f6006438b900363b740330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  themeIndex: 0
+  defaultThemes:
+  - name: Rabbit
+    background: {fileID: 21300000, guid: 147fdb1f88130a940a890cea4ba50bd2, type: 3}
+    animalSprite: {fileID: 21300000, guid: c76dc33ea2d59864193d90619186196e, type: 3}
+    animalBlinkSprite: {fileID: 21300000, guid: 47be90d01e8118142a8c378669a02bc7,
+      type: 3}
+    unlockScore: 0
+    unlocked: 1
+    textColor: {r: 0.9117647, g: 0.9117647, b: 0.9117647, a: 1}
+  - name: Pig
+    background: {fileID: 21300000, guid: a4a961e41faaddd45a46183c4d69d80e, type: 3}
+    animalSprite: {fileID: 21300000, guid: a97e5b62599ab1345bb9e4605f055fec, type: 3}
+    animalBlinkSprite: {fileID: 21300000, guid: 9a156702fa54fe7449065b6d0ff3f85c,
+      type: 3}
+    unlockScore: 25
+    unlocked: 1
+    textColor: {r: 0.93333334, g: 0.62352943, b: 0.93333334, a: 1}
+  - name: Penguin
+    background: {fileID: 21300000, guid: 2c1df1db7f4bc0e4e95dcef3ef79d8ae, type: 3}
+    animalSprite: {fileID: 21300000, guid: 56810dcd0b6cd314aa5602aed0db29f9, type: 3}
+    animalBlinkSprite: {fileID: 21300000, guid: 5c84c0de1f69cc549960e249b95ab040,
+      type: 3}
+    unlockScore: 50
+    unlocked: 1
+    textColor: {r: 0.10980392, g: 0.22352941, b: 0.2627451, a: 1}
+  - name: Snake
+    background: {fileID: 21300000, guid: b9bf32e5f8bd23e40a671eef3c6f5a6a, type: 3}
+    animalSprite: {fileID: 21300000, guid: ed10270f5ea836a4c9d55b8314b12705, type: 3}
+    animalBlinkSprite: {fileID: 21300000, guid: 3a09b139d4a2bda4b91dbfab7ea3fbae,
+      type: 3}
+    unlockScore: 100
+    unlocked: 0
+    textColor: {r: 0.20392157, g: 0.49411765, b: 0.05882353, a: 1}
+  - name: Space
+    background: {fileID: 21300000, guid: 96ab0c4a92567bf4ca9ffaeb14ba574e, type: 3}
+    animalSprite: {fileID: 21300000, guid: a3d9351c7316dec44bf761ff9f738094, type: 3}
+    animalBlinkSprite: {fileID: 21300000, guid: 128acc38cded0ad4c90783f52a3e360a,
+      type: 3}
+    unlockScore: 200
+    unlocked: 0
+    textColor: {r: 0.15686275, g: 0.3254902, b: 0.5568628, a: 1}
