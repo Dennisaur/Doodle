@@ -67,7 +67,7 @@ MonoBehaviour:
     animalBlinkSprite: {fileID: 21300000, guid: 9a156702fa54fe7449065b6d0ff3f85c,
       type: 3}
     unlockScore: 25
-    unlocked: 1
+    unlocked: 0
     textColor: {r: 0.93333334, g: 0.62352943, b: 0.93333334, a: 1}
   - name: Penguin
     background: {fileID: 21300000, guid: 2c1df1db7f4bc0e4e95dcef3ef79d8ae, type: 3}
@@ -75,7 +75,7 @@ MonoBehaviour:
     animalBlinkSprite: {fileID: 21300000, guid: 5c84c0de1f69cc549960e249b95ab040,
       type: 3}
     unlockScore: 50
-    unlocked: 1
+    unlocked: 0
     textColor: {r: 0.10980392, g: 0.22352941, b: 0.2627451, a: 1}
   - name: Snake
     background: {fileID: 21300000, guid: b9bf32e5f8bd23e40a671eef3c6f5a6a, type: 3}

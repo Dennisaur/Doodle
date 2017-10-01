@@ -93,6 +93,10 @@ public class ThemeManager : MonoBehaviour {
 		PlayerPrefs.SetInt ("GameMode", (int)gameMode);
 	}
 
+	public Theme[] GetThemes() {
+		return themes;
+	}
+
 	public GameMode GetGameMode() {
 		return gameMode;
 	}

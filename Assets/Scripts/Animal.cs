@@ -49,7 +49,7 @@ public class Animal : MonoBehaviour {
 		// Collision with hand
 		if (other.gameObject.tag == "Bullet") {
 			// Add to score
-			GameManager.instance.AddPoints (1);
+			GameManager.instance.AddPoints ();
 
 			// Set blink time and change to blinking sprite
 			blinkTime = Time.time;
@@ -57,6 +57,8 @@ public class Animal : MonoBehaviour {
 
 			// Sets reference to destroy later (after blink complete)
 			hand = other.gameObject;
+
+			// AnimalManager.instance.AnimalRemove (gameObject);
 		}
 		// Collision with player
 		else if (other.gameObject.tag == "Player") {

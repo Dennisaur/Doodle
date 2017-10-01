@@ -5,6 +5,9 @@ using UnityEngine;
 public class AnimalManager : MonoBehaviour {
 	public static AnimalManager instance = null;
 
+	public RectTransform UIcanvas;
+	private float canvasWidth;
+
 	// Animal spawning variables
 	public GameObject animal;
 	public GameObject animalParent;
@@ -14,6 +17,7 @@ public class AnimalManager : MonoBehaviour {
 	public GameObject[] spawnLocations;
 
 	private List<float> animalXPositions;
+	private List<GameObject> animals;
 
 	private float spawnRate;
 	private float lastSpawn;
@@ -35,7 +39,14 @@ public class AnimalManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		canvasWidth = UIcanvas.rect.width;
+		float splitWidth = canvasWidth / 3;
+		for (int i = 0; i < spawnLocations.Length; i++) {
+			spawnLocations [i].transform.localPosition = new Vector3 (splitWidth * (i - 1), spawnLocations [i].transform.localPosition.y);
+		}
+
 		animalXPositions = new List<float> ();
+		animals = new List<GameObject> ();
 		ResetSpawnRate ();
 	}
 
@@ -45,7 +56,8 @@ public class AnimalManager : MonoBehaviour {
 		if (Time.time - (1f / spawnRate) >= lastSpawn) {
 			// Spawn the animal object
 			Vector3 randomSpawnPosition = spawnLocations[Random.Range(0, spawnLocations.Length)].transform.position;
-			Instantiate(animal, randomSpawnPosition, Quaternion.identity, animalParent.transform);
+			GameObject newAnimal = Instantiate(animal, randomSpawnPosition, Quaternion.identity);
+			animals.Add (newAnimal);
 			animalXPositions.Add (randomSpawnPosition.x);
 
 			// Reset last spawn time
@@ -69,10 +81,16 @@ public class AnimalManager : MonoBehaviour {
 		spawnRate = startingSpawnRate;
 		lastSpawn = Time.time;
 		lastLevel = Time.time;
+		animalXPositions = new List<float> ();
 	}
 
 	public void AnimalsShift() {
 		animalXPositions.RemoveAt (0);
+		animals.RemoveAt (0);
+	}
+
+	public void AnimalRemove(GameObject ani) {
+		animals.Remove (ani);
 	}
 
 	public float GetFirstAnimalX() {

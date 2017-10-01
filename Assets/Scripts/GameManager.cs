@@ -6,10 +6,13 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
-	public GestureHandler gestureHandler;
+	public GestureHandlerQueue gestureHandler;
 
 	public GameMode gameMode;
 
+	public int autoPoints;
+	public int tiltPoints;
+	private int points;
 	public int score;
 	public Text scoreText;
 
@@ -59,12 +62,14 @@ public class GameManager : MonoBehaviour {
 		gameMode = (GameMode)PlayerPrefs.GetInt ("GameMode", 0);
 		switch (gameMode) {
 		case GameMode.Auto:
+			points = autoPoints;
 			break;
 		case GameMode.Stick:
 			player.GetComponent<Joystick> ().enabled = true;
 			break;
 		case GameMode.Tilt:
 			player.GetComponent<AccelerometerInput> ().enabled = true;
+			points = tiltPoints;
 			break;
 		}
 	}
@@ -111,9 +116,13 @@ public class GameManager : MonoBehaviour {
 		gameOverHighScore.text = highScore.ToString ();
 		modalGameOver.SetActive (true);
 
-		PlayerPrefs.SetInt ("Boops", score + PlayerPrefs.GetInt ("Boops", 0));
+		ScoreToCurrency ();
 
 		AdManager.instance.CompletePlay ();
+	}
+
+	public void ScoreToCurrency() {
+		PlayerPrefs.SetInt ("Currency", score + PlayerPrefs.GetInt ("Currency", 0));
 	}
 
 	/// <summary>
@@ -151,7 +160,7 @@ public class GameManager : MonoBehaviour {
 	/// Adds points to current score
 	/// </summary>
 	/// <param name="points">Points.</param>
-	public void AddPoints(int points) {
+	public void AddPoints() {
 		score += points;
 		scoreText.text = score.ToString ();
 	}
