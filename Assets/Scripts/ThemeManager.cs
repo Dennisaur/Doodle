@@ -5,6 +5,8 @@ using UnityEngine;
 public class ThemeManager : MonoBehaviour {
 	public static ThemeManager instance = null;
 
+	public int tiltMultiplier = 2;
+
 	public int themeIndex;
 	public Theme[] defaultThemes;
 	private Theme[] themes;
@@ -19,9 +21,7 @@ public class ThemeManager : MonoBehaviour {
 			// If not, set instance to this
 			instance = this;
 
-			PlayerPrefs.DeleteAll ();
-
-			// Initialize themes in awake because other objects depends on theme to be intialized
+			// Initialize playerprefs in awake because other objects depends on theme to be intialized
 			string temp = "";
 			themes = new Theme[defaultThemes.Length];
 			for (int i = 0; i < defaultThemes.Length; ++i) {
@@ -32,6 +32,10 @@ public class ThemeManager : MonoBehaviour {
 					themes [i] = JsonUtility.FromJson<Theme> (temp);
 				}
 			}
+
+			themeIndex = PlayerPrefs.GetInt ("ThemeIndex", 0);
+			highScore = PlayerPrefs.GetInt ("HighScore", 0);
+			gameMode = (GameMode)PlayerPrefs.GetInt ("GameMode", 0);
 		}
 		// If instance already exists and it's not this:
 		else if (instance != this) {
@@ -44,9 +48,6 @@ public class ThemeManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		themeIndex = PlayerPrefs.GetInt ("ThemeIndex", 0);
-		highScore = PlayerPrefs.GetInt ("HighScore", 0);
-		gameMode = (GameMode)PlayerPrefs.GetInt ("GameMode", 0);
 	}
 
 	/// <summary>
@@ -81,8 +82,12 @@ public class ThemeManager : MonoBehaviour {
 		Theme theme = themes [themeIndex];
 		theme.unlocked = true;
 		PlayerPrefs.SetString ("Theme-" + themeIndex, JsonUtility.ToJson (theme));
+		PlayerPrefs.Save ();
 	}
 
+	/// <summary>
+	/// Toggles the game mode.
+	/// </summary>
 	public void ToggleGameMode() {
 		if (gameMode == GameMode.Auto) {
 			gameMode = GameMode.Tilt;
@@ -91,12 +96,21 @@ public class ThemeManager : MonoBehaviour {
 		}
 
 		PlayerPrefs.SetInt ("GameMode", (int)gameMode);
+		PlayerPrefs.Save ();
 	}
 
+	/// <summary>
+	/// Gets the themes.
+	/// </summary>
+	/// <returns>The themes.</returns>
 	public Theme[] GetThemes() {
 		return themes;
 	}
 
+	/// <summary>
+	/// Gets the game mode.
+	/// </summary>
+	/// <returns>The game mode.</returns>
 	public GameMode GetGameMode() {
 		return gameMode;
 	}

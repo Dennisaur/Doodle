@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour {
 
 	public GameMode gameMode;
 
-	public int autoPoints;
-	public int tiltPoints;
 	private int points;
 	public int score;
 	public Text scoreText;
@@ -62,14 +60,14 @@ public class GameManager : MonoBehaviour {
 		gameMode = (GameMode)PlayerPrefs.GetInt ("GameMode", 0);
 		switch (gameMode) {
 		case GameMode.Auto:
-			points = autoPoints;
+			points = 1;
 			break;
 		case GameMode.Stick:
 			player.GetComponent<Joystick> ().enabled = true;
 			break;
 		case GameMode.Tilt:
 			player.GetComponent<AccelerometerInput> ().enabled = true;
-			points = tiltPoints;
+			points = ThemeManager.instance.tiltMultiplier;
 			break;
 		}
 	}
@@ -122,7 +120,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void ScoreToCurrency() {
-		PlayerPrefs.SetInt ("Currency", score + PlayerPrefs.GetInt ("Currency", 0));
+		bool hasKey = PlayerPrefs.HasKey ("Currency");
+		if (hasKey) {
+			PlayerPrefs.SetInt ("Currency", score + PlayerPrefs.GetInt ("Currency", 0));
+		} else {
+			PlayerPrefs.SetInt ("Currency", score);
+		}
+		PlayerPrefs.Save ();
 	}
 
 	/// <summary>

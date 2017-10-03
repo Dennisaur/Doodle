@@ -9,6 +9,7 @@ public class AdManager : MonoBehaviour {
 	public int playsPerAd;
 	private int plays;
 
+
 	// Called before Start functions
 	void Awake () {
 		// Check if instance already exists

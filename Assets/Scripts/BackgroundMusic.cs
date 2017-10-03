@@ -15,8 +15,6 @@ public class BackgroundMusic : MonoBehaviour {
 		if (instance == null) {
 			// If not, set instance to this
 			instance = this;
-			soundIsOn = (PlayerPrefs.GetInt ("SoundOn", 1) == 1);
-			audioSource.mute = !soundIsOn;
 		}
 		// If instance already exists and it's not this:
 		else if (instance != this) {
@@ -29,6 +27,8 @@ public class BackgroundMusic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		soundIsOn = GetSoundIsOn();
+		audioSource.mute = !soundIsOn;
 	}
 
 	/// <summary>
@@ -36,7 +36,7 @@ public class BackgroundMusic : MonoBehaviour {
 	/// </summary>
 	/// <returns><c>true</c>, if sound is on, <c>false</c> otherwise.</returns>
 	public bool GetSoundIsOn() {
-		return soundIsOn;
+		return (PlayerPrefs.GetInt ("SoundOn", 1) == 1);
 	}
 		
 	/// <summary>
@@ -45,6 +45,7 @@ public class BackgroundMusic : MonoBehaviour {
 	public void ToggleSound() {
 		soundIsOn = !soundIsOn;
 		PlayerPrefs.SetInt ("SoundOn", soundIsOn ? 1 : 0);
+		PlayerPrefs.Save ();
 		audioSource.mute = !soundIsOn;
 	}
 }

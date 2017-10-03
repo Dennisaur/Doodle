@@ -28,6 +28,8 @@ public class AccelerometerInput : MonoBehaviour {
 
 		targetPosition = midLane;
 
+		// Set up tilt sensitivity
+		//TODO sensitivity settings
 		TiltInput tiltInput = GetComponent<TiltInput> ();
 		tiltInput.fullTiltAngle = 10 + (5 * (5 - tiltSensitivity));
 	}
@@ -41,17 +43,10 @@ public class AccelerometerInput : MonoBehaviour {
 		} else {
 			LerpPosition (midLane);
 		}
-//			if (Input.acceleration.x < -(tiltSensitivity)) {
-//				LerpPosition (leftLane);
-//			} else if (Input.acceleration.x > tiltSensitivity) {
-//				LerpPosition (rightLane);
-//			} else {
-//				LerpPosition (midLane);
-//			}
 	}
 
 	/// <summary>
-	/// Lerps transform towards destination
+	/// Lerps transform towards target lane
 	/// </summary>
 	/// <param name="targetLane">New destination to lerp to.</param>
 	void LerpPosition (Vector3 targetLane) {
@@ -65,7 +60,7 @@ public class AccelerometerInput : MonoBehaviour {
 
 		// Use journey distance and speed to lerp player position
 		float journeyLength = Vector3.Distance(ogPosition, targetPosition);
-		if (journeyLength <= 0) {
+		if (!lerping || journeyLength <= 0) {
 			return;
 		}
 		float distanceCovered = (Time.time - startTime) * speed;
@@ -73,7 +68,7 @@ public class AccelerometerInput : MonoBehaviour {
 		transform.position = Vector3.Lerp (ogPosition, targetPosition, fractionOfJourney);
 
 		// Lerp complete
-		if (fractionOfJourney >= 1f) {
+		if (fractionOfJourney > 1f) {
 			lerping = false;
 		}
 	}

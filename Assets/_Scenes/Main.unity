@@ -2023,7 +2023,7 @@ MonoBehaviour:
   leftAnimalSpawn: {fileID: 306615544}
   rightAnimalSpawn: {fileID: 414935479}
   speed: 50
-  tiltSensitivity: 4
+  tiltSensitivity: 5
 --- !u!4 &1042598401
 Transform:
   m_ObjectHideFlags: 0
@@ -2090,8 +2090,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gestureHandler: {fileID: 1097047331}
   gameMode: 2
-  autoPoints: 1
-  tiltPoints: 3
   score: 0
   scoreText: {fileID: 1650236794}
   player: {fileID: 1042598398}

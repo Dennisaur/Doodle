@@ -84,15 +84,18 @@ public class AnimalManager : MonoBehaviour {
 		animalXPositions = new List<float> ();
 	}
 
+	/// <summary>
+	/// Shift first animal out of list
+	/// </summary>
 	public void AnimalsShift() {
 		animalXPositions.RemoveAt (0);
 		animals.RemoveAt (0);
 	}
 
-	public void AnimalRemove(GameObject ani) {
-		animals.Remove (ani);
-	}
-
+	/// <summary>
+	/// Returns x position of first animal
+	/// </summary>
+	/// <returns>The first animal x.</returns>
 	public float GetFirstAnimalX() {
 		return (animalXPositions.Count > 0) ? animalXPositions [0] : Mathf.Infinity;
 	}

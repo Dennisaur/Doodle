@@ -66,7 +66,7 @@ MonoBehaviour:
     animalSprite: {fileID: 21300000, guid: a97e5b62599ab1345bb9e4605f055fec, type: 3}
     animalBlinkSprite: {fileID: 21300000, guid: 9a156702fa54fe7449065b6d0ff3f85c,
       type: 3}
-    unlockScore: 25
+    unlockScore: 1000
     unlocked: 0
     textColor: {r: 0.93333334, g: 0.62352943, b: 0.93333334, a: 1}
   - name: Penguin
@@ -74,7 +74,7 @@ MonoBehaviour:
     animalSprite: {fileID: 21300000, guid: 56810dcd0b6cd314aa5602aed0db29f9, type: 3}
     animalBlinkSprite: {fileID: 21300000, guid: 5c84c0de1f69cc549960e249b95ab040,
       type: 3}
-    unlockScore: 50
+    unlockScore: 2000
     unlocked: 0
     textColor: {r: 0.10980392, g: 0.22352941, b: 0.2627451, a: 1}
   - name: Snake
@@ -82,7 +82,7 @@ MonoBehaviour:
     animalSprite: {fileID: 21300000, guid: ed10270f5ea836a4c9d55b8314b12705, type: 3}
     animalBlinkSprite: {fileID: 21300000, guid: 3a09b139d4a2bda4b91dbfab7ea3fbae,
       type: 3}
-    unlockScore: 100
+    unlockScore: 5000
     unlocked: 0
     textColor: {r: 0.20392157, g: 0.49411765, b: 0.05882353, a: 1}
   - name: Space
@@ -90,6 +90,6 @@ MonoBehaviour:
     animalSprite: {fileID: 21300000, guid: a3d9351c7316dec44bf761ff9f738094, type: 3}
     animalBlinkSprite: {fileID: 21300000, guid: 128acc38cded0ad4c90783f52a3e360a,
       type: 3}
-    unlockScore: 200
+    unlockScore: 10000
     unlocked: 0
     textColor: {r: 0.15686275, g: 0.3254902, b: 0.5568628, a: 1}

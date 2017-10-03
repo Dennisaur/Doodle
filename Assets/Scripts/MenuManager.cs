@@ -7,6 +7,11 @@ public class MenuManager : MonoBehaviour {
 	public RectTransform UIcanvas;
 	private float canvasWidth;
 
+	public GameObject backToExit;
+	public float backPressedDelay;
+	private float backPressedTime;
+	private bool backPressed;
+
 	public CanvasGroup lockedGroup;
 	public CanvasGroup unlockedGroup;
 
@@ -64,8 +69,9 @@ public class MenuManager : MonoBehaviour {
 		// Get dynamic color texts
 		dynamicTexts = new List<Text> ();
 		Text[] texts = FindObjectsOfType<Text> ();
+		bool ignore;
 		foreach (Text text in texts) {
-			bool ignore = false;
+			ignore = false;
 			foreach (Transform ignoreParent in ignoreColorChange) {
 				if (text.transform.IsChildOf (ignoreParent)) {
 					ignore = true;
@@ -81,7 +87,7 @@ public class MenuManager : MonoBehaviour {
 		dynamicImages = new List<Image> ();
 		Image[] images = FindObjectsOfType<Image> ();
 		foreach (Image image in images) {
-			bool ignore = false;
+			ignore = false;
 			foreach (Transform ignoreParent in ignoreColorChange) {
 				if (image.transform.IsChildOf (ignoreParent)) {
 					ignore = true;
@@ -103,10 +109,42 @@ public class MenuManager : MonoBehaviour {
 		UpdateMenu ();
 	}
 
+	// Save player prefs when pausing
+	void OnApplicationPause(bool pauseStatus) {
+		if (pauseStatus) {
+			PlayerPrefs.Save ();
+		}
+	}
+
+	/// <summary>
+	/// When back button is pressed
+	/// </summary>
+	void Back() {
+		if (backPressed) {
+			PlayerPrefs.Save ();
+			Application.Quit ();
+		} else {
+			backPressed = true;
+			backPressedTime = Time.time;
+			backToExit.SetActive (true);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
+		// Handle back button
+		if (backPressed && Time.time - backPressedTime >= backPressedDelay) {
+			backPressed = false;
+			backToExit.SetActive (false);
+		}
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Back ();
+		}
+
 		float lerpPercent = (Time.time - transitionStart) / transitionTime;
+
 		if (unlocking) {
+			// Fade out locked object when unlocking theme
 			lockedGroup.alpha = 1 - lerpPercent;
 			unlockedGroup.alpha = lerpPercent;
 
@@ -117,20 +155,20 @@ public class MenuManager : MonoBehaviour {
 			}
 		}
 		else if (!lerpComplete) {
-			// Change background theme
+			// Scroll background theme
 			scrollableBG.transform.localPosition = Vector3.Lerp (scrollableStartPosition, scrollableEndPosition, lerpPercent);
 
-			// Change text color
+			// Change text colors
 			foreach (Text text in dynamicTexts) {
 				text.color = Color.Lerp (colorStart, colorEnd, lerpPercent);
 			}
 
-			// Change image color
+			// Change image colors
 			foreach (Image image in dynamicImages) {
 				image.color = Color.Lerp (colorStart, colorEnd, lerpPercent);
 			}
 
-			// Fade locked/unlocked canvas group
+			// Fade locked/unlocked objects
 			if (oldTheme.unlocked != targetTheme.unlocked) {
 				if (targetTheme.unlocked) {
 					lockedGroup.alpha = 1 - lerpPercent;
@@ -141,6 +179,7 @@ public class MenuManager : MonoBehaviour {
 				}
 			}
 
+			// When lerping is complete
 			if (lerpPercent > 1) {
 				lerpComplete = true;
 				oldTheme = targetTheme;
@@ -156,7 +195,6 @@ public class MenuManager : MonoBehaviour {
 	/// </summary>
 	public void PreviousTheme() {
 		ThemeManager.instance.PreviousTheme ();
-
 		UpdateMenu ();
 	}
 
@@ -165,7 +203,6 @@ public class MenuManager : MonoBehaviour {
 	/// </summary>
 	public void NextTheme() {
 		ThemeManager.instance.NextTheme ();
-
 		UpdateMenu ();
 	}
 
@@ -181,12 +218,13 @@ public class MenuManager : MonoBehaviour {
 	/// Unlocks the theme.
 	/// </summary>
 	public void UnlockTheme() {
-		// Unlock theme in player prefs
+		// Unlock theme in theme manager
 		ThemeManager.instance.UnlockTheme();
 
 		unlocking = true;
 		transitionStart = Time.time;
 
+		// Subtract cost from currency
 		PlayerPrefs.SetInt ("Currency", PlayerPrefs.GetInt ("Currency") - targetTheme.unlockScore);
 
 		UpdateMenu ();
@@ -197,7 +235,6 @@ public class MenuManager : MonoBehaviour {
 	/// </summary>
 	public void ToggleGameMode() {
 		ThemeManager.instance.ToggleGameMode ();
-
 		UpdateMenu ();
 	}
 
@@ -209,11 +246,6 @@ public class MenuManager : MonoBehaviour {
 
 		SetUpThemeTransition();
 
-		// Set high score/unlock score text
-		int unlockCost = targetTheme.unlockScore;
-		txtHighScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString();
-		txtUnlockScore.text = unlockCost.ToString();
-
 		// Set sound off/on
 		bool soundIsOn = BackgroundMusic.instance.GetSoundIsOn ();
 		soundOnSprite.SetActive (soundIsOn);
@@ -223,16 +255,27 @@ public class MenuManager : MonoBehaviour {
 		int currency = PlayerPrefs.GetInt("Currency", 0);
 		txtCurrency.text = currency.ToString();
 
-		bool unlockable = (currency >= unlockCost);
-		lockButton.SetActive (!unlockable);
-		unlockButton.SetActive (unlockable);
-
 		// Update game mode
 		bool isTilt = ThemeManager.instance.GetGameMode() == GameMode.Tilt;
 		txtGameMode.text = (isTilt) ? "Tilt" : "Auto";
 		tiltObject.SetActive (isTilt);
 		autoObject.SetActive (!isTilt);
-		txtMultipler.text = "x" + (isTilt ? 3 : 1);
+		txtMultipler.text = "x" + (isTilt ? ThemeManager.instance.tiltMultiplier : 1); //TODO theme manager multiplier
+
+		// Set menu settings when theme is locked
+		if (!targetTheme.unlocked) {
+			txtUnlockScore.gameObject.SetActive (!targetTheme.unlocked);
+
+			// Set high score/unlock cost text
+			int unlockCost = targetTheme.unlockScore;
+			txtHighScore.text = PlayerPrefs.GetInt ("HighScore", 0).ToString ();
+			txtUnlockScore.text = unlockCost.ToString ();
+
+			// Set buttons if unlockable
+			bool unlockable = (currency >= unlockCost);
+			lockButton.SetActive (!unlockable);
+			unlockButton.SetActive (unlockable);
+		}
 	}
 
 	/// <summary>
@@ -256,7 +299,15 @@ public class MenuManager : MonoBehaviour {
 		prevTheme.SetActive (themeIndex > 0);
 		nextTheme.SetActive (themeIndex < bgThemes.Length - 1);
 
+		// Set locked/unlocked groups to active for fade transition
 		lockedGroup.gameObject.SetActive (true);
 		unlockedGroup.gameObject.SetActive (true);
+	}
+
+	public void DebugMe() {
+		Debug.Log ("Currency: " + PlayerPrefs.GetInt ("Currency", -1));
+		Debug.Log ("GameMode: " + PlayerPrefs.GetInt ("GameMode", -1));
+		Debug.Log ("SoundOn: " + PlayerPrefs.GetInt ("SoundOn", -1));
+		Debug.Log ("Theme: " + PlayerPrefs.GetInt ("ThemeIndex", -1));
 	}
 }
